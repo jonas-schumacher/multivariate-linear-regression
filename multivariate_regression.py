@@ -236,7 +236,7 @@ torch_targets = torch.tensor(targets.values, dtype=torch.float32)
 loss_function = nn.MSELoss()
 
 """
-2) Vanilla SGD = first-order SGD
+2) Vanilla SGD = first-order optimizer
 """
 
 solution = Solution.SGD
@@ -293,6 +293,7 @@ weights_comparison[solution] = pd.DataFrame(
 Final Comparison
 """
 
+# Final performance comparison:
 for solution in Solution:
     print(f"{solution.value}:\n{weights_comparison[solution].to_string()}")
 
@@ -302,7 +303,7 @@ print(
 print(metric_comparison[METRIC_TO_PERFORM_FINAL_EVALUATION_ON].iloc[-1, :].to_string())
 
 
-# Weight comparison:
+# Final weight comparison using Frobenius norm:
 solution_names, solution_norms = zip(
     *[
         (
@@ -327,7 +328,7 @@ plt.ylim(0, 5)
 plt.tight_layout()
 plt.show()
 
-# Prediction comparison:
+# Final prediction comparison:
 for target_col in targets.columns:
     min_prediction = np.inf
     max_prediction = -np.inf
@@ -359,7 +360,7 @@ for target_col in targets.columns:
     plt.show()
 
 
-# Metric Comparison:
+# Track performance metrics during training:
 fig, ax = plt.subplots(1, 1)
 ax.plot(
     metric_comparison[METRIC_TO_PERFORM_FINAL_EVALUATION_ON].loc[
